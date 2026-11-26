@@ -1,0 +1,4 @@
+table,n_rows,dup_loan_id,dup_user_id
+train_public,10000,0,0
+train_internet,750000,0,0
+test_public,5000,0,0

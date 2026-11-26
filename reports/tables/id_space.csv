@@ -1,0 +1,5 @@
+table,column,n_rows,n_unique,min,max,dense_0_to_n-1
+train_public,user_id,10000,10000,200008,249997,False
+train_internet,user_id,750000,750000,0,749999,True
+test_public,user_id,5000,5000,200006,249998,False
+overlap,user_id,,,,,

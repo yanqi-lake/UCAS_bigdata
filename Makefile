@@ -3,11 +3,12 @@
 
 PY := .venv/bin/python
 
-.PHONY: setup verify test clean help
+.PHONY: setup verify eda test clean help
 
 help:
 	@echo "make setup   创建 .venv 并安装 requirements.txt"
 	@echo "make verify  数据自检（MD5/行列数/提交样例对齐）"
+	@echo "make eda     P1 数据治理与 EDA（表格 + 图）"
 	@echo "make test    跑单测"
 	@echo "make clean   清缓存"
 
@@ -18,6 +19,9 @@ setup:
 
 verify:
 	$(PY) scripts/00_verify_data.py
+
+eda:
+	$(PY) scripts/01_eda.py --section all
 
 test:
 	$(PY) -m pytest

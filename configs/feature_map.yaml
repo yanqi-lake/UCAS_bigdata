@@ -1,0 +1,70 @@
+# 两域字段语义与编码映射（P1 产出，P2 直接消费）
+# type:    id / numeric / ordinal / categorical / datetime
+# scope:   common（两域都有）/ public_only / internet_only
+# encoding: none / onehot / ordinal / frequency / target / datetime_parts
+# missing:  none / median / mode / constant / indicator
+# transferable: 该字段是否进入跨域迁移（PSI 结论见 reports/tables/psi.csv）
+version: 1
+target:
+  public: isDefault
+  internet: is_default
+  test: null
+
+fields:
+  # ---------- 标识 ----------
+  loan_id:        {type: id,         scope: common,        encoding: none,  missing: none,     transferable: false, note: "贷款记录唯一标识"}
+  user_id:        {type: id,         scope: common,        encoding: none,  missing: none,     transferable: false, note: "借款人标识；源域为 0..749999 稠密编号，不可 join"}
+
+  # ---------- 贷款额度与定价 ----------
+  total_loan:     {type: numeric,    scope: common,        encoding: none,  missing: median,   transferable: true,  note: "贷款数额"}
+  year_of_loan:   {type: ordinal,    scope: common,        encoding: ordinal, missing: mode,   transferable: true,  note: "贷款期限（年），取值 3/5"}
+  interest:       {type: numeric,    scope: common,        encoding: none,  missing: median,   transferable: true,  note: "当前贷款利率"}
+  monthly_payment: {type: numeric,    scope: common,        encoding: none,  missing: median,   transferable: true,  note: "分期付款金额"}
+  class:          {type: ordinal,    scope: common,        encoding: ordinal, missing: mode,   transferable: true,  note: "贷款级别 A-G，A 最优"}
+  policy_code:    {type: categorical,scope: common,        encoding: onehot, missing: constant, transferable: true, note: "公开策略=1 / 不公开=2"}
+
+  # ---------- 借款人属性 ----------
+  employer_type:  {type: categorical,scope: common,        encoding: target, missing: constant, transferable: true, note: "所在公司类型"}
+  industry:       {type: categorical,scope: common,        encoding: target, missing: constant, transferable: true, note: "工作领域"}
+  work_year:      {type: ordinal,    scope: common,        encoding: ordinal, missing: constant, transferable: true, note: "工作年限，缺失填 10+ years"}
+  house_exist:    {type: categorical,scope: common,        encoding: onehot, missing: constant, transferable: true, note: "是否有房（源域对应 house_ownership）"}
+  post_code:      {type: categorical,scope: common,        encoding: frequency, missing: constant, transferable: true, note: "邮编前 3 位，高基数"}
+  region:         {type: categorical,scope: common,        encoding: target, missing: constant, transferable: true, note: "地区编码 0-50，两域编码体系不同"}
+  title:          {type: categorical,scope: common,        encoding: frequency, missing: constant, transferable: true, note: "贷款名称，高基数（需截断长尾）"}
+  app_type:       {type: categorical,scope: public_only,   encoding: onehot, missing: constant, transferable: false, note: "是否个人申请（仅目标域）"}
+
+  # ---------- 信用行为 ----------
+  censor_status:  {type: categorical,scope: common,        encoding: onehot, missing: constant, transferable: true, note: "审核状态"}
+  use:            {type: categorical,scope: common,        encoding: target, missing: constant, transferable: true, note: "贷款用途"}
+  initial_list_status: {type: categorical, scope: common,  encoding: onehot, missing: constant, transferable: true, note: "初始列表状态"}
+  debt_loan_ratio: {type: numeric,    scope: common,        encoding: none,  missing: median,   transferable: true,  note: "债务收入比"}
+  del_in_18month: {type: numeric,    scope: common,        encoding: none,  missing: constant, transferable: true,  note: "近 18 个月逾期事件数"}
+  scoring_low:    {type: numeric,    scope: common,        encoding: none,  missing: median,   transferable: false,  note: "评分区间下限；PSI=5.31，两域评分体系不同，不可直接迁移"}
+  scoring_high:   {type: numeric,    scope: common,        encoding: none,  missing: median,   transferable: false,  note: "评分区间上限；PSI=4.90，两域评分体系不同，不可直接迁移"}
+  known_outstanding_loan: {type: numeric, scope: public_only, encoding: none, missing: median, transferable: false, note: "未结信用额度数量（仅目标域）"}
+  known_dero:     {type: numeric,    scope: public_only,   encoding: none,  missing: constant, transferable: false, note: "贬损公共记录数（仅目标域）"}
+  pub_dero_bankrup: {type: numeric,  scope: common,        encoding: none,  missing: constant, transferable: true,  note: "公开记录清除数量"}
+  recircle_b:     {type: numeric,    scope: common,        encoding: none,  missing: median,   transferable: true,  note: "信贷周转余额合计"}
+  recircle_u:     {type: numeric,    scope: common,        encoding: none,  missing: median,   transferable: true,  note: "循环额度利用率"}
+
+  # ---------- 还款 / 时间 ----------
+  early_return:   {type: numeric,    scope: common,        encoding: none,  missing: constant, transferable: true,  note: "提前还款次数；PSI=1.71，需域内分位变换"}
+  early_return_amount: {type: numeric, scope: common,      encoding: none,  missing: constant, transferable: true,  note: "提前还款累积金额；PSI=2.85，需域内分位变换"}
+  early_return_amount_3mon: {type: numeric, scope: common, encoding: none,  missing: constant, transferable: true,  note: "近 3 月提前还款金额；PSI=0.78，需域内分位变换"}
+  issue_date:     {type: datetime,   scope: common,        encoding: datetime_parts, missing: none, transferable: true, note: "放款月份；目标域为 2016/10/1 格式，源域为 2015-06-01"}
+  earlies_credit_mon: {type: datetime, scope: common,      encoding: datetime_parts, missing: none, transferable: false, note: "最早信用额度开立月份；目标域 46.7% 为 DD-Mon（年份丢失），不可直接迁移"}
+
+  # ---------- 匿名特征 ----------
+  f0:             {type: numeric,    scope: common,        encoding: none,  missing: indicator, transferable: true, note: "匿名计数特征 0，缺失约 5%"}
+  f1:             {type: numeric,    scope: common,        encoding: none,  missing: indicator, transferable: true, note: "匿名计数特征 1，缺失约 8.6%"}
+  f2:             {type: numeric,    scope: common,        encoding: none,  missing: indicator, transferable: true, note: "匿名计数特征 2"}
+  f3:             {type: numeric,    scope: common,        encoding: none,  missing: indicator, transferable: true, note: "匿名计数特征 3"}
+  f4:             {type: numeric,    scope: common,        encoding: none,  missing: indicator, transferable: true, note: "匿名计数特征 4"}
+  f5:             {type: numeric,    scope: internet_only, encoding: none,  missing: indicator, transferable: false, note: "匿名计数特征 5（仅源域）"}
+
+  # ---------- 仅源域 ----------
+  sub_class:      {type: categorical,scope: internet_only, encoding: target, missing: constant, transferable: false, note: "网络贷款等级子级"}
+  work_type:      {type: categorical,scope: internet_only, encoding: target, missing: constant, transferable: false, note: "工作类型"}
+  house_loan_status: {type: categorical, scope: internet_only, encoding: onehot, missing: constant, transferable: false, note: "房贷状态"}
+  marriage:       {type: categorical,scope: internet_only, encoding: onehot, missing: constant, transferable: false, note: "婚姻状态"}
+  offsprings:     {type: categorical,scope: internet_only, encoding: ordinal, missing: constant, transferable: false, note: "子女状态（有序）"}
