@@ -1,0 +1,13 @@
+# P0 锁定版本（WSL Ubuntu-24.04 / Python 3.12）
+# 说明：pandas 固定 2.2.x，官方 baseline 与常见写法才可直接跑（系统 python 是 3.0.x，会报 inplace 相关错误）
+pandas==2.2.3
+numpy==1.26.4
+scipy==1.13.1
+scikit-learn==1.5.2
+lightgbm==4.5.0
+matplotlib==3.9.2
+seaborn==0.13.2
+joblib==1.4.2
+PyYAML==6.0.2
+datasketch==1.6.5
+pytest==8.3.3

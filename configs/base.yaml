@@ -1,0 +1,19 @@
+# P0 全项目共用配置；各实验在 configs/experiments/ 下覆盖
+seed: 2026
+n_folds: 5
+target_col: isDefault
+source_target_col: is_default
+id_col: loan_id
+date_col: issue_date
+
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  splits_dir: data/splits
+
+# 由 P1 填充：可迁移字段与字段映射（feature_map.yaml）的引用
+feature_map: configs/feature_map.yaml
+
+# 日志与产物
+reports_dir: reports
+results_dir: results

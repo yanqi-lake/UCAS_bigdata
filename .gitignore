@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# 数据与中间产物（体积大，不进 git；原始数据在 data/raw 与 data/official 由组内共享）
+data/raw/*.csv
+data/official/*.zip
+data/processed/
+data/splits/
+*.parquet
+*.pkl
+
+# 图表与表格保留（报告要用），临时文件忽略
+reports/**/*.tmp

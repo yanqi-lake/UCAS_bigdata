@@ -1,0 +1,14 @@
+item,type,expected,actual,ok
+official/train_dataset.zip,official_md5,192D3D30A9252E849C600C0931C8C1FB,192D3D30A9252E849C600C0931C8C1FB,True
+official/test_public.csv,official_md5,D4A2AB57C4B6188CC606949501750420,D4A2AB57C4B6188CC606949501750420,True
+official/submit_example.csv,official_md5,5F272DFEE05DF1C950009A6E5700E509,5F272DFEE05DF1C950009A6E5700E509,True
+official/个贷违约预测baseline.zip,official_md5,0D4D985CB15DB705E89A3DD8CFCDEEC5,0D4D985CB15DB705E89A3DD8CFCDEEC5,True
+official/【更新1117】个贷违约预测Baseline.zip,official_md5,2DAA6FEB80626560FC09D448AFF3FBE3,2DAA6FEB80626560FC09D448AFF3FBE3,True
+raw/train_public.csv,raw_md5,-,3F7A7170FC437D3CB8BCC0E2F4A0DAF7,True
+raw/train_internet.csv,raw_md5,-,0BE09D538ED87794A86388B73896DCA0,True
+raw/test_public.csv,raw_md5,-,D4A2AB57C4B6188CC606949501750420,True
+shape:train_public,check,-,"实际 (10000, 39), 期望 (10000, 39)",True
+shape:train_internet,check,-,"实际 (750000, 42), 期望 (750000, 42)",True
+shape:test_public,check,-,"实际 (5000, 38), 期望 (5000, 38)",True
+columns:test_vs_train,check,-,列集合与顺序一致,True
+submit_example:id_order,check,-,样例 5000 行 / 测试 5000 行，同序=True,True
