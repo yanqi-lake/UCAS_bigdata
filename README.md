@@ -9,6 +9,18 @@
 - P0 交接：[docs/HANDOFF_P0.md](docs/HANDOFF_P0.md)
 - 数据说明：[data/README.md](data/README.md)
 
+## 当前进度
+
+| 阶段 | 内容 | 状态 |
+|---|---|---|
+| P0 | 环境、骨架、数据自检 | ✅ |
+| P1 | 数据治理、EDA、PSI、字段映射 | ✅ |
+| P2 | 特征工程 | ⬜ 下一步 |
+
+- 总计划：[docs/PLAN.md](docs/PLAN.md)
+- **接手先读：[docs/HANDOFF.md](docs/HANDOFF.md)**
+- 环节报告：[reports/R1_data.md](reports/R1_data.md)
+
 ## 快速开始
 
 ```bash
