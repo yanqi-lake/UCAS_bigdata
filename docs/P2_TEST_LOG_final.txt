@@ -1,0 +1,129 @@
+P2 最终实际运行记录
+Python 3.13.5 / pandas 2.2.3 / NumPy 2.3.5 / scikit-learn 1.8.0
+
+
+=== python -m pytest tests/test_features.py -q ===
+...........                                                              [100%]
+11 passed in 1.38s
+
+
+=== python scripts/02_prepare.py --fold all --format csv --run-name p2_target_all ===
+Aligned shapes: (10000, 40) (750000, 43) (5000, 39)
+/mnt/data/p2_final_work/data/processed/p2_target_all/fold_0 {'train': (8000, 86), 'val': (2000, 86), 'test': (5000, 86)} {'method': 'pca', 'input_features': 86, 'output_features': 31, 'explained_variance_ratio': 0.9001817107200623}
+/mnt/data/p2_final_work/data/processed/p2_target_all/fold_1 {'train': (8000, 85), 'val': (2000, 85), 'test': (5000, 85)} {'method': 'pca', 'input_features': 85, 'output_features': 31, 'explained_variance_ratio': 0.9105403423309326}
+/mnt/data/p2_final_work/data/processed/p2_target_all/fold_2 {'train': (8000, 86), 'val': (2000, 86), 'test': (5000, 86)} {'method': 'pca', 'input_features': 86, 'output_features': 31, 'explained_variance_ratio': 0.9015600085258484}
+/mnt/data/p2_final_work/data/processed/p2_target_all/fold_3 {'train': (8000, 86), 'val': (2000, 86), 'test': (5000, 86)} {'method': 'pca', 'input_features': 86, 'output_features': 32, 'explained_variance_ratio': 0.9106774926185608}
+/mnt/data/p2_final_work/data/processed/p2_target_all/fold_4 {'train': (8000, 86), 'val': (2000, 86), 'test': (5000, 86)} {'method': 'pca', 'input_features': 86, 'output_features': 32, 'explained_variance_ratio': 0.9113633036613464}
+/mnt/data/p2_final_work/data/processed/p2_target_all/fold_time {'train': (7953, 85), 'val': (2047, 85), 'test': (5000, 85)} {'method': 'pca', 'input_features': 85, 'output_features': 30, 'explained_variance_ratio': 0.9010053277015686}
+
+
+=== python scripts/p2_validate.py --existing-target data/processed/p2_target_all --full ===
+{"case": "target_0", "fold": 0, "n_train": 8000, "n_val": 2000, "n_test": 5000, "features": 86, "reduced_features": 31, "variance": 0.9001817107200623, "reduction": "pca", "removed": 0, "roundtrip": "PASS", "seconds": null, "source_rows": 0, "auc": 0.8844669328067767, "ks": 0.6539606227106227, "recall_at_fraction": 0.35714285714285715}
+{"case": "target_1", "fold": 1, "n_train": 8000, "n_val": 2000, "n_test": 5000, "features": 85, "reduced_features": 31, "variance": 0.9105403423309326, "reduction": "pca", "removed": 0, "roundtrip": "PASS", "seconds": null, "source_rows": 0, "auc": 0.8642953725961539, "ks": 0.6340430402930404, "recall_at_fraction": 0.3273809523809524}
+{"case": "target_2", "fold": 2, "n_train": 8000, "n_val": 2000, "n_test": 5000, "features": 86, "reduced_features": 31, "variance": 0.9015600085258484, "reduction": "pca", "removed": 0, "roundtrip": "PASS", "seconds": null, "source_rows": 0, "auc": 0.8635978380924682, "ks": 0.6283967160988597, "recall_at_fraction": 0.34124629080118696}
+{"case": "target_3", "fold": 3, "n_train": 8000, "n_val": 2000, "n_test": 5000, "features": 86, "reduced_features": 32, "variance": 0.9106774926185608, "reduction": "pca", "removed": 0, "roundtrip": "PASS", "seconds": null, "source_rows": 0, "auc": 0.880995162651602, "ks": 0.6663978259589494, "recall_at_fraction": 0.35311572700296734}
+{"case": "target_4", "fold": 4, "n_train": 8000, "n_val": 2000, "n_test": 5000, "features": 86, "reduced_features": 32, "variance": 0.9113633036613464, "reduction": "pca", "removed": 0, "roundtrip": "PASS", "seconds": null, "source_rows": 0, "auc": 0.8776620137001702, "ks": 0.6802407432850788, "recall_at_fraction": 0.34124629080118696}
+{"case": "target_time", "fold": "time", "n_train": 7953, "n_val": 2047, "n_test": 5000, "features": 85, "reduced_features": 30, "variance": 0.9010053277015686, "reduction": "pca", "removed": 0, "roundtrip": "PASS", "seconds": null, "source_rows": 0, "auc": 0.8493097755453299, "ks": 0.6238276722048544, "recall_at_fraction": 0.2921686746987952}
+START common_e1
+{"case": "common_e1", "fold": 0, "n_train": 8000, "n_val": 2000, "n_test": 5000, "features": 68, "reduced_features": 27, "variance": 0.9079211950302124, "reduction": "pca", "removed": 0, "roundtrip": "PASS", "seconds": 4.223519022999881, "source_rows": 0, "auc": 0.873442150297619, "ks": 0.6402243589743589, "recall_at_fraction": 0.33035714285714285}
+START no_derived
+{"case": "no_derived", "fold": 0, "n_train": 8000, "n_val": 2000, "n_test": 5000, "features": 73, "reduced_features": 29, "variance": 0.9086042046546936, "reduction": "pca", "removed": 0, "roundtrip": "PASS", "seconds": 4.052195975999894, "source_rows": 0, "auc": 0.8734278416895604, "ks": 0.632554945054945, "recall_at_fraction": 0.3392857142857143}
+START no_dedup
+{"case": "no_dedup", "fold": 0, "n_train": 8000, "n_val": 2000, "n_test": 5000, "features": 86, "reduced_features": 31, "variance": 0.9001817107200623, "reduction": "pca", "removed": 0, "roundtrip": "PASS", "seconds": 4.10348200899989, "source_rows": 0, "auc": 0.8844669328067767, "ks": 0.6539606227106227, "recall_at_fraction": 0.35714285714285715}
+START no_reduction
+{"case": "no_reduction", "fold": 0, "n_train": 8000, "n_val": 2000, "n_test": 5000, "features": 86, "reduced_features": null, "variance": null, "reduction": "none", "removed": 0, "roundtrip": "PASS", "seconds": 3.963253053000244, "source_rows": 0, "auc": 0.8844669328067767, "ks": 0.6539606227106227, "recall_at_fraction": 0.35714285714285715}
+START svd
+{"case": "svd", "fold": 0, "n_train": 8000, "n_val": 2000, "n_test": 5000, "features": 86, "reduced_features": 32, "variance": 0.9075286388397217, "reduction": "svd", "removed": 0, "roundtrip": "PASS", "seconds": 4.382890626000062, "source_rows": 0, "auc": 0.8844669328067767, "ks": 0.6539606227106227, "recall_at_fraction": 0.35714285714285715}
+START no_early
+{"case": "no_early", "fold": 0, "n_train": 8000, "n_val": 2000, "n_test": 5000, "features": 76, "reduced_features": 29, "variance": 0.9091725945472717, "reduction": "pca", "removed": 0, "roundtrip": "PASS", "seconds": 4.107671355000093, "source_rows": 0, "auc": 0.7158560840201464, "ks": 0.3523351648351648, "recall_at_fraction": 0.22916666666666666}
+START source_sample
+{"case": "source_sample", "fold": 0, "n_train": 18000, "n_val": 2000, "n_test": 5000, "features": 69, "reduced_features": 28, "variance": 0.9035966396331787, "reduction": "pca", "removed": 0, "roundtrip": "PASS", "seconds": 2.423895368999638, "source_rows": 10000, "auc": 0.8741593692765568, "ks": 0.6422847985347985, "recall_at_fraction": 0.3244047619047619}
+START source_full
+{"case": "source_full", "fold": 0, "n_train": 757999, "n_val": 2000, "n_test": 5000, "features": 69, "reduced_features": 28, "variance": 0.904194712638855, "reduction": "pca", "removed": 1, "roundtrip": "PASS", "seconds": 123.26615142599985, "source_rows": 749999}
+ALL REQUESTED CASES PASS
+
+
+=== git clone --depth 1 https://github.com/yanqi-lake/UCAS_bigdata.git upstream ===
+Cloning into 'upstream'...
+fatal: unable to access 'https://github.com/yanqi-lake/UCAS_bigdata.git/': Could not resolve host: github.com
+
+
+=== python -m pip install pyarrow --retries 0 --timeout 8 ===
+WARNING: The directory '/home/oai/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+ERROR: Could not find a version that satisfies the requirement pyarrow (from versions: none)
+ERROR: No matching distribution found for pyarrow
+
+
+=== 独立解压后执行两次 p2_bootstrap.py，再运行 P2 单测 ===
+installed missing compatibility file: src/io.py
+installed missing compatibility file: src/dates.py
+installed missing compatibility file: configs/feature_map.yaml
+kept existing: src/io.py
+kept existing: src/dates.py
+kept existing: configs/feature_map.yaml
+...........                                                              [100%]
+11 passed in 1.21s
+
+
+=== SHA256 of the three uploaded CSVs ===
+{
+  "train_public": "797ee36cf3e610413c015c763a37582121a2fb5cb2c4d22ff8fa48524693e0e7",
+  "train_internet": "f9a1688c74f6e2a414d895c62ebf99eff8b6319c1391d5d3cb4a06db95f35292",
+  "test_public": "5b5e14ff058d983c19d5f643f6058d506406fb4bfa15d6957bba470b8da75a30"
+}
+
+=== 上次同数据全量源域计算结果 ===
+{
+  "name": "revised_full_common",
+  "kwargs": {
+    "scope": "common",
+    "use_source": true,
+    "include_domain": true
+  },
+  "shapes": {
+    "train": [
+      757999,
+      69
+    ],
+    "val": [
+      2000,
+      69
+    ],
+    "test": [
+      5000,
+      69
+    ]
+  },
+  "reduction": {
+    "method": "pca",
+    "input_features": 69,
+    "output_features": 28,
+    "explained_variance_ratio": 0.904194712638855
+  },
+  "dedup": [
+    {
+      "domain": "target",
+      "input_rows": 8000,
+      "removed": 0,
+      "conflicts": 0,
+      "truncated_buckets": 208,
+      "candidate_checks": 92042
+    },
+    {
+      "domain": "source",
+      "input_rows": 750000,
+      "removed": 1,
+      "conflicts": 0,
+      "truncated_buckets": 57197,
+      "candidate_checks": 46962261
+    }
+  ],
+  "finite": true,
+  "same_columns": true,
+  "test_id_order": true,
+  "labels_excluded": true,
+  "prior_nonzero": 0,
+  "seconds": 93.057136969
+}
+
+本次全量源域已完成 CSV 特征矩阵、元数据及降维矩阵写出和回读比对。
