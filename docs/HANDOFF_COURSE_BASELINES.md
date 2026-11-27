@@ -29,8 +29,8 @@
 
 1. 将原始 `train_public.csv` 放到 `data/raw/`（脚本也兼容 `data/`）。先运行 `02_make_splits.py`；其余脚本会校验数据 SHA256。
 2. 按编号运行 `03` 至 `08`。`08` 从最新的 PCA 结果中选择模型和阈值；如仓库中已有其他 PCA 试验，请明确指定本批次 `20261126T184807Z` 的文件，避免误取。
-3. `09` 引用本批次固定决策文件 `reduced_model_decision_20261126T185314Z.json`，并且发现已有 `final_holdout_metrics_*.json` 时会停止，防止反复查看留出集。**已有留出集成绩，不应以新一轮调参覆盖它。**
-4. `10` 仅依据保存的最终结果生成图表。
+3. `09` 引用本批次固定决策文件 `reduced_model_decision_20261126T185314Z.json`。已有最终结果时普通运行会直接说明并退出，不重新评价；若要复核同一固定方案，可显式运行 `python scripts/09_final_holdout.py --verify-existing`，它只比较已有指标和混淆矩阵，不写新结果。**已有留出集成绩，不应以新一轮调参覆盖它。**
+4. `10` 仅依据保存的最终结果生成图表；图已存在时退出而不覆盖。
 
 脚本使用 pandas、numpy、scikit-learn、scipy、Pillow；`04` 另用 matplotlib。实际运行记录：Python 3.12.14、pandas 3.0.1、numpy 2.3.5、scikit-learn 1.9.1、scipy 1.16.3。原仓库 WSL 环境可能使用不同版本，合并前应在该环境运行语法检查和必要的复核；不要把上述版本直接覆盖仓库统一依赖。
 
