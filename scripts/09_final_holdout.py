@@ -7,6 +7,7 @@ Stops if a final holdout metrics file already exists; do not tune on holdout.
 
 import hashlib
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -45,8 +46,15 @@ EXCLUDED = ["early_return", "early_return_amount", "early_return_amount_3mon"]
 
 if DATA is None:
     raise FileNotFoundError("找不到 train_public.csv")
-if list(RESULTS.glob("final_holdout_metrics_*.json")):
-    raise FileExistsError("已存在最终留出集评价；为防止反复调参，脚本已停止")
+existing_metrics = sorted(RESULTS.glob("final_holdout_metrics_*.json"))
+verify_existing = sys.argv[1:] == ["--verify-existing"]
+if sys.argv[1:] and not verify_existing:
+    raise SystemExit("仅支持可选参数 --verify-existing")
+if existing_metrics and not verify_existing:
+    print("最终留出集结果已存在；未重复评价。要用固定方案复核，请加 --verify-existing。")
+    raise SystemExit(0)
+if verify_existing and len(existing_metrics) != 1:
+    raise ValueError("复核模式要求恰好一份已有的最终留出集指标文件")
 decision = json.loads(DECISION.read_text(encoding="utf-8"))
 split = json.loads(SPLITS.read_text(encoding="utf-8"))
 with DATA.open("rb") as stream:
@@ -117,6 +125,17 @@ metrics = {
     "versions": {"pandas": pd.__version__, "numpy": np.__version__, "sklearn": sklearn.__version__},
     "interpretation_note": "One-time independent holdout evaluation of the frozen development decision. Do not tune features, model or threshold using these results.",
 }
+if verify_existing:
+    saved = json.loads(existing_metrics[0].read_text(encoding="utf-8"))
+    if saved["source_sha256"] != digest or saved["threshold"] != threshold:
+        raise ValueError("已有结果的数据哈希或阈值与固定方案不一致")
+    for name in ("roc_auc", "average_precision", "f1", "precision", "recall"):
+        if abs(metrics[name] - saved[name]) > 1e-8:
+            raise ValueError(f"复核失败：{name} 与已保存结果不同")
+    if metrics["confusion_matrix"] != saved["confusion_matrix"]:
+        raise ValueError("复核失败：混淆矩阵不同")
+    print("复核通过：数据哈希、固定阈值、五项指标和混淆矩阵均与已保存结果一致。")
+    raise SystemExit(0)
 
 predictions = pd.DataFrame({
     "row_index": holdout_ids,

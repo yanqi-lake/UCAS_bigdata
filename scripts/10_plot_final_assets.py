@@ -19,8 +19,13 @@ if importance.empty:
     raise ValueError("特征重要性表为空")
 importance_path = FIGURES / f"final_holdout_feature_importance_{stamp}.png"
 confusion_path = FIGURES / f"final_holdout_confusion_matrix_{stamp}.png"
+if importance_path.exists() and confusion_path.exists():
+    print("最终图表已存在；未覆盖：")
+    print(importance_path)
+    print(confusion_path)
+    raise SystemExit(0)
 if importance_path.exists() or confusion_path.exists():
-    raise FileExistsError("目标图表已存在；未覆盖")
+    raise FileExistsError("仅部分目标图表存在；为避免覆盖，已停止")
 
 font = ImageFont.load_default()
 top = importance.head(15).iloc[::-1]
