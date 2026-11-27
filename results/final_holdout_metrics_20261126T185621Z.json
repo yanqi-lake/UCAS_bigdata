@@ -1,0 +1,36 @@
+{
+  "source_data": "C:\\Users\\12208\\Desktop\\LoanDefaultPrediction\\data\\train_public.csv",
+  "source_sha256": "797ee36cf3e610413c015c763a37582121a2fb5cb2c4d22ff8fa48524693e0e7",
+  "split_file": "C:\\Users\\12208\\Desktop\\LoanDefaultPrediction\\data\\splits\\split_indices.json",
+  "decision_file": "C:\\Users\\12208\\Desktop\\LoanDefaultPrediction\\results\\reduced_model_decision_20261126T185314Z.json",
+  "train_rows": 8000,
+  "holdout_rows": 2000,
+  "train_positive": 1346,
+  "holdout_positive": 337,
+  "scenario": "no_pca",
+  "model": "random_forest",
+  "threshold": 0.19,
+  "excluded_features": [
+    "early_return",
+    "early_return_amount",
+    "early_return_amount_3mon"
+  ],
+  "pca_used": false,
+  "roc_auc": 0.6794306524799663,
+  "average_precision": 0.3017775237021366,
+  "f1": 0.3732590529247911,
+  "precision": 0.2716216216216216,
+  "recall": 0.5964391691394659,
+  "confusion_matrix": {
+    "tn": 1124,
+    "fp": 539,
+    "fn": 136,
+    "tp": 201
+  },
+  "versions": {
+    "pandas": "3.0.1",
+    "numpy": "2.3.5",
+    "sklearn": "1.9.1"
+  },
+  "interpretation_note": "One-time independent holdout evaluation of the frozen development decision. Do not tune features, model or threshold using these results."
+}
