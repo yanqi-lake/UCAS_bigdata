@@ -1,0 +1,57 @@
+{
+  "source": "C:\\Users\\12208\\Desktop\\LoanDefaultPrediction\\data\\train_public.csv",
+  "source_sha256": "797ee36cf3e610413c015c763a37582121a2fb5cb2c4d22ff8fa48524693e0e7",
+  "split_file": "C:\\Users\\12208\\Desktop\\LoanDefaultPrediction\\data\\splits\\split_indices.json",
+  "development_rows": 8000,
+  "holdout_rows_not_inspected": 2000,
+  "numeric_columns": [
+    "total_loan",
+    "year_of_loan",
+    "interest",
+    "monthly_payment",
+    "debt_loan_ratio",
+    "del_in_18month",
+    "scoring_low",
+    "scoring_high",
+    "known_outstanding_loan",
+    "known_dero",
+    "pub_dero_bankrup",
+    "recircle_b",
+    "recircle_u",
+    "f0",
+    "f1",
+    "f2",
+    "f3",
+    "f4",
+    "early_return",
+    "early_return_amount",
+    "early_return_amount_3mon"
+  ],
+  "categorical_columns": [
+    "class",
+    "employer_type",
+    "industry",
+    "work_year",
+    "house_exist",
+    "censor_status",
+    "use",
+    "region",
+    "initial_list_status",
+    "app_type"
+  ],
+  "excluded_from_numeric_correlation": [
+    "loan_id",
+    "user_id",
+    "post_code",
+    "title",
+    "policy_code",
+    "issue_date",
+    "earlies_credit_mon"
+  ],
+  "notes": [
+    "Pearson and Spearman correlations are descriptive, not causal.",
+    "IQR counts flag unusual values; they are not automatically data errors.",
+    "Early-return fields require a prediction-time availability audit before final modeling.",
+    "No holdout scores or values were used."
+  ]
+}

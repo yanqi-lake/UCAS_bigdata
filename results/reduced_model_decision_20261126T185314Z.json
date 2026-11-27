@@ -1,0 +1,17 @@
+{
+  "source_pca_summary": "C:\\Users\\12208\\Desktop\\LoanDefaultPrediction\\results\\pca_cv_summary_20261126T184807Z.csv",
+  "source_pca_oof": "C:\\Users\\12208\\Desktop\\LoanDefaultPrediction\\results\\pca_cv_oof_20261126T184807Z.csv",
+  "source_data_sha256": "797ee36cf3e610413c015c763a37582121a2fb5cb2c4d22ff8fa48524693e0e7",
+  "split_file": "C:\\Users\\12208\\Desktop\\LoanDefaultPrediction\\data\\splits\\split_indices.json",
+  "development_rows": 8000,
+  "holdout_rows_not_read": 2000,
+  "feature_policy": "exclude early_return, early_return_amount, early_return_amount_3mon",
+  "model_selection_rule": "Highest mean five-fold ROC-AUC; tie: higher mean average precision, then name",
+  "threshold_selection_rule": "Highest mean five-fold F1 over 0.05..0.50 step 0.005; tie: lower threshold",
+  "selected_scenario": "no_pca",
+  "selected_model": "random_forest",
+  "selected_threshold": 0.19,
+  "development_cv_roc_auc_mean": 0.6847840715348004,
+  "development_cv_f1_mean_at_selected_threshold": 0.36919710704244,
+  "note": "Model and threshold were chosen on the same development folds. Their CV scores are selection estimates, not an independent test. Evaluate the reserved holdout once after freezing this decision."
+}
